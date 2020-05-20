@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-3">
     <v-label>Стоп-лист</v-label>
-    <v-breadcrumbs divider=">">
+    <v-breadcrumbs>
       <v-breadcrumbs-item>Главная</v-breadcrumbs-item>
       <v-breadcrumbs-divider />
       <v-breadcrumbs-item>Стоп-лист</v-breadcrumbs-item>
@@ -26,11 +26,22 @@
           <v-btn rounded class="success" @click="addNumber">добавить</v-btn>
         </v-col>
       </v-row>
-      <v-card>Телефон</v-card>
-      <v-card
-              append-icon="delete"
-      >79159874536</v-card>
-      <v-card>1-25</v-card>
+      <v-card class="d-flex justify-space-between mb-1">
+        <v-card-text>Телефон</v-card-text>
+        <v-card-text>Действия</v-card-text>
+      </v-card>
+      <v-card class="d-flex justify-space-around mb-1">
+        <v-card-text>79159874536</v-card-text>
+        <v-icon @click="">create</v-icon>
+        <v-icon color="red" @click="">delete</v-icon>
+      </v-card>
+      <v-card class="d-flex flex-row">
+        <v-card-text>Строк на странице</v-card-text>
+        <v-select
+          :items="numbersShow"
+        ></v-select>
+        <v-pagination></v-pagination>
+      </v-card>
 
     </v-card>
     <v-dialog v-model="addNewDialog" v-if="addNewDialog" width="70%">
@@ -38,10 +49,15 @@
         <v-label>Стоп-лист</v-label>
         <v-row justify="center" align="center">
           <v-col cols="10" class="d-flex justify-center align-center">
-            <v-text-field>
+            <v-text-field
+                    v-model="addPhone"
+                    label="Телефон"
+                    single-line
+                    hide-details
+                    class="d-flex align-center">
               <template v-slot:append-outer>
-                <v-btn fab small class="primary pl-11">
-                  <v-icon>checked</v-icon>
+                <v-btn fab small class="primary">
+                  <v-icon>done</v-icon>
                 </v-btn>
               </template>
             </v-text-field>
@@ -59,7 +75,9 @@ export default {
   data() {
     return {
       search: '',
-      addNewDialog: false
+      addPhone: '',
+      addNewDialog: false,
+      numbersShow: [10, 15, 25]
     }
   },
   methods: {
