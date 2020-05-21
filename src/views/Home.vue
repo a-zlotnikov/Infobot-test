@@ -47,7 +47,7 @@
 
     <v-dialog v-model="addNewDialog" v-if="addNewDialog" width="70%">
       <v-card min-height="500px">
-        <v-label>Стоп-лист</v-label>
+        <v-card-title class="pt-8 pl-12">Добавить новый номер</v-card-title>
         <v-row justify="center" align="center">
           <v-col cols="10" class="d-flex justify-center align-center">
             <v-text-field
@@ -64,13 +64,17 @@
             </v-text-field>
           </v-col>
         </v-row>
-        <v-btn rounded color="grey lighten-3" @click="closeNewDialog">Назад</v-btn>
+        <v-row justify="center">
+          <v-col cols="10" class="d-flex justify-start">
+            <v-btn rounded color="grey lighten-3" @click="closeNewDialog">Назад</v-btn>
+          </v-col>
+        </v-row>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="addEditDialog" v-if="addEditDialog" width="70%">
       <v-card min-height="500px">
-        <v-label>Стоп-лист</v-label>
+        <v-card-title class="pt-8 pl-12">Редактировать номер</v-card-title>
         <v-row justify="center" align="center">
           <v-col cols="10" class="d-flex justify-center align-center">
             <v-text-field
@@ -86,7 +90,11 @@
             </v-text-field>
           </v-col>
         </v-row>
-        <v-btn rounded color="grey lighten-3" @click="closeEditDialog">Назад</v-btn>
+        <v-row justify="center">
+          <v-col cols="10" class="d-flex justify-start">
+            <v-btn rounded color="grey lighten-3" @click="closeEditDialog">Назад</v-btn>
+          </v-col>
+        </v-row>
       </v-card>
     </v-dialog>
   </v-container>
