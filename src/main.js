@@ -2,19 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import vuetify from './plugins/vuetify';
-import colors from 'vuetify/lib/util/colors'
-import Vuetify from 'vuetify';
+import vuetify from './plugins/vuetify'
+import Vuetify from 'vuetify'
 
 Vue.config.productionTip = false
 
-Vue.use(Vuetify, {
-  theme: {
-    primary: colors.red, // #E53935
-    secondary: colors.red.lighten4, // #FFCDD2
-    accent: colors.red.base // #3F51B5
-  }
-})
+Vue.use(Vuetify)
 
 new Vue({
   router,
