@@ -5,9 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    phones: [{number: 12345}, {number: 67890}]
+    phones: []
   },
   mutations: {
+    updatePhones(state, phones) {
+      state.phones = phones
+    },
     addNewPhone(state, phone) {
       state.phones.push(phone)
     },
@@ -19,7 +22,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
+    async fetchPhones(context) {
+      const res = await fetch('/phones')
+      const phones = await res.json()
+      console.log(phones);
+      context.commit('updatePhones', phones.response)
+    }
   },
   getters: {
     getPhones(state) {

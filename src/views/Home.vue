@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
@@ -117,6 +117,7 @@ export default {
   },
   computed: mapGetters(['getPhones']),
   async mounted() {
+    this.$store.dispatch('fetchPhones')
   },
   methods: {
     ...mapMutations(['addNewPhone', 'deleteNewPhone', 'editNewPhone']),

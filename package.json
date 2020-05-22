@@ -1,6 +1,7 @@
 {
   "name": "infobot-test",
   "version": "0.1.0",
+  "proxy": "http://localhost:5000",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "firebase": "^7.14.4",
+    "http-proxy-middleware": "^1.0.4",
     "material-design-icons": "^3.0.1",
     "material-design-icons-iconfont": "^5.0.1",
     "vue": "^2.6.11",
