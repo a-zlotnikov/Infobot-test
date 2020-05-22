@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       search: '',
-      newPhone: '',
+      newPhone: null,
       addNewDialog: false,
       addEditDialog: false,
       selectedPhone: null,
@@ -154,6 +154,7 @@ export default {
       this.editNewPhone({newPhone, oldPhone})
       this.addEditDialog = false
       this.selectedPhone = null
+      this.oldPhone = null
     }
     },
   components: {
