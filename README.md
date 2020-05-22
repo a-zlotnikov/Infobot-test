@@ -1,19 +1,18 @@
 # infobot-test
 
-## Project setup
+## Установка проекта в корневой папке
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Запуск клиентской части в корневой папке
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Запуск серверной части
 ```
-yarn build
+cd server
+npm i 
+npm start
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
