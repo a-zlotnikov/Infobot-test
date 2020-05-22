@@ -31,7 +31,7 @@
       <v-card v-for="(phone, i) of getPhones" :key="i" class="d-flex justify-space-between mb-1">
         <v-card-text class="text-left ml-2" style="width: 90%" >{{ phone.number }}</v-card-text>
           <v-icon @click="showEditDialog(phone, i)">create</v-icon>
-          <v-icon color="red" @click="deletePhone(i)" class="pr-8">delete</v-icon>
+          <v-icon color="red" @click="deletePhone(phone)" class="pr-8">delete</v-icon>
       </v-card>
       <v-card class="d-flex flex-row justify-end">
         <v-card-subtitle class="d-flex flex-row align-center" style="width: 50%">
@@ -83,7 +83,7 @@
                     hide-details
                     class="d-flex align-center">
               <template v-slot:append-outer>
-                <v-btn @click="editPhone(selectedPhone)" fab small class="primary">
+                <v-btn @click="editPhone(selectedPhone, oldPhone)" fab small class="primary">
                   <v-icon>done</v-icon>
                 </v-btn>
               </template>
@@ -112,15 +112,16 @@ export default {
       addNewDialog: false,
       addEditDialog: false,
       selectedPhone: null,
+      oldPhone: null,
       numbersShow: [10, 15, 25]
     }
   },
   computed: mapGetters(['getPhones']),
   async mounted() {
-    this.$store.dispatch('fetchPhones')
+    this.fetchPhones()
   },
   methods: {
-    ...mapMutations(['addNewPhone', 'deleteNewPhone', 'editNewPhone']),
+    ...mapActions(['fetchPhones', 'addNewPhone', 'deleteNewPhone', 'editNewPhone']),
     clear() {
       this.search = ''
     },
@@ -133,6 +134,7 @@ export default {
     },
     showEditDialog(phone, i) {
       this.selectedPhone = phone
+      this.oldPhone = {...phone}
       this.selectedPhone.key = i
       this.addEditDialog = true
     },
@@ -141,17 +143,15 @@ export default {
       this.selectedPhone = null
     },
     addPhone() {
-      this.addNewPhone({
-        number: this.newPhone
-      })
+      this.addNewPhone(this.newPhone)
       this.addNewDialog = false
       this.newPhone = ''
     },
-    deletePhone(num) {
-      this.deleteNewPhone(num)
+    deletePhone(phone) {
+      this.deleteNewPhone(phone)
     },
-    editPhone(num) {
-      this.editNewPhone(num)
+    editPhone(newPhone, oldPhone) {
+      this.editNewPhone({newPhone, oldPhone})
       this.addEditDialog = false
       this.selectedPhone = null
     }

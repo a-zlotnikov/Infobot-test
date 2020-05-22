@@ -11,13 +11,13 @@ export default new Vuex.Store({
     updatePhones(state, phones) {
       state.phones = phones
     },
-    addNewPhone(state, phone) {
-      state.phones.push(phone)
+    addPhone(state, phone) {
+      state.phones.push({number: phone})
     },
-    deleteNewPhone(state, i) {
-      state.phones.splice(i, 1)
+    deletePhone(state, phone) {
+      state.phones = state.phones.filter(i => i !== phone)
     },
-    editNewPhone(state, phone) {
+    editPhone(state, phone) {
       state.phones.splice(phone.key, 1, {number: phone.number})
     }
   },
@@ -25,13 +25,48 @@ export default new Vuex.Store({
     async fetchPhones(context) {
       const res = await fetch('/phones')
       const phones = await res.json()
-      console.log(phones);
       context.commit('updatePhones', phones.response)
+    },
+    async addNewPhone(context, phone) {
+      let res = await fetch('/phones', {
+        method: 'POST',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({number: phone})
+      })
+      const result = await res.json()
+      if (result.answer === 'ok') {
+        context.commit('addPhone', phone)
+      }
+    },
+    async deleteNewPhone(context, phone) {
+      let res = await fetch('/phones', {
+        method: 'DELETE',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({number: phone.number})
+      })
+      const result = await res.json()
+      if (result.answer === 'ok') {
+        context.commit('deletePhone', phone)
+      }
+    },
+    async editNewPhone(context, phone) {
+      let res = await fetch('/phones', {
+        method: 'PUT',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({phone})
+      })
+      const result = await res.json()
+      if (result.answer === 'ok') {
+        context.commit('editPhone', phone.newPhone)
+      }
     }
   },
   getters: {
     getPhones(state) {
       return state.phones
+    },
+    phonesAmount(state) {
+      return state.phones.length
     }
   }
 })
