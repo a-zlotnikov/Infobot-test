@@ -33,7 +33,6 @@ router.delete('/', async function(req, res, next) {
 router.put('/', async function(req, res, next) {
   try {
     const {phone} = req.body
-    console.log(phone)
     await Phone.findOneAndUpdate(phone.oldPhone, phone.newPhone)
     await res.json({answer: 'ok'})
   } catch(e) {}
