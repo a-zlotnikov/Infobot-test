@@ -75,7 +75,18 @@
                 </v-list>
               </v-menu>
               <v-card-text>Страница {{ page }} из {{numberOfPages}} </v-card-text>
-              <v-pagination></v-pagination>
+              <v-btn
+                      class="mr-1"
+                      @click="formerPage"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                      class="ml-1"
+                      @click="nextPage"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
             </v-card-subtitle>
           </v-card>
         </template>
@@ -90,6 +101,9 @@
             <v-text-field
                     v-model.number="newPhone"
                     label="Телефон"
+                    :rules="[rules.required, rules.isPhone]"
+                    required
+                    maxlength="16"
                     single-line
                     hide-details
                     class="d-flex align-center">
@@ -116,6 +130,9 @@
           <v-col cols="10" class="d-flex justify-center align-center">
             <v-text-field
                     v-model="selectedPhone.number"
+                    :rules="[rules.required, rules.isPhone]"
+                    maxlength="16"
+                    required
                     single-line
                     hide-details
                     class="d-flex align-center">
@@ -153,7 +170,14 @@ export default {
       itemsPerPage: 25,
       itemsPerPageArray: [10, 15, 25],
       page: 1,
-      sortBy: 'number'
+      sortBy: 'number',
+      rules: {
+        required: value => !!value || "Введите номер телефона",
+        isPhone: value => {
+          const pattern = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
+          return pattern.test(value) || 'Номер введен в неверном формате'
+        }
+      }
     }
   },
   computed: {
@@ -203,7 +227,13 @@ export default {
       this.addEditDialog = false
       this.selectedPhone = null
       this.oldPhone = null
-    }
+    },
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1
+    },
     },
   components: {
 
