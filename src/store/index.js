@@ -28,14 +28,16 @@ export default new Vuex.Store({
       context.commit('updatePhones', phones.response)
     },
     async addNewPhone(context, phone) {
-      let res = await fetch('/phones', {
-        method: 'POST',
-        headers: {'Content-type': 'application/json'},
-        body: JSON.stringify({number: phone})
-      })
-      const result = await res.json()
-      if (result.answer === 'ok') {
-        context.commit('addPhone', phone)
+      if (phone) {
+        let res = await fetch('/phones', {
+          method: 'POST',
+          headers: {'Content-type': 'application/json'},
+          body: JSON.stringify({number: phone})
+        })
+        const result = await res.json()
+        if (result.answer === 'ok') {
+          context.commit('addPhone', phone)
+        }
       }
     },
     async deleteNewPhone(context, phone) {
